@@ -9,7 +9,10 @@ class Season extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'start_at', 'end_at'];
-
+    public function prices()
+    {
+        return $this->hasMany(RoomSeasonPrice::class);
+    }
     public function reservations()
     {
         return $this->hasMany(Reservation::class);

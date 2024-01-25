@@ -29,4 +29,13 @@ class Reservation extends Model
     {
         return $this->belongsToMany(AddOn::class, 'room_addon_assignments');
     }
+    public function getTotalPriceAttribute()
+    {
+        $roomSeasonPrice = $this->room->prices()->where('season_id', $this->season_id)->first();
+        $roomPrice = $roomSeasonPrice ? $roomSeasonPrice->price : 0;
+
+        $addonPrices = $this->addons->sum('price');
+
+        return $roomPrice + $addonPrices;
+    }
 }

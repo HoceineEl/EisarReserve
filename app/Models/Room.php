@@ -19,7 +19,10 @@ class Room extends Model
     {
         return $this->belongsTo(Type::class);
     }
-
+    public function prices()
+    {
+        return $this->hasMany(RoomSeasonPrice::class);
+    }
     public function reservations()
     {
         return $this->hasMany(Reservation::class);

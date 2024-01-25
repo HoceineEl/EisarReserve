@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('reservation_date');
             $table->date('checkin_date');
             $table->date('checkout_date');
-            $table->decimal('total_base_price');
             $table->string('status');
             $table->timestamps();
         });
