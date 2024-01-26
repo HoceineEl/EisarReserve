@@ -12,6 +12,6 @@ class AddOn extends Model
 
     public function reservations()
     {
-        return $this->belongsToMany(Reservation::class, 'room_addon_assignments');
+        return $this->belongsToMany(Reservation::class, 'reservation_addon_assignments')->withPivot(['reservation_id', 'add_on_id']);
     }
 }

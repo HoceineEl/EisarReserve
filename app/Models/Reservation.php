@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
-    protected $fillable = ['room_id', 'season_id', 'user_id', 'reservation_date', 'checkin_date', 'checkout_date', 'total_base_price', 'status'];
-
+    protected $fillable = ['room_id', 'season_id', 'user_id', 'reservation_date', 'checkin_date', 'checkout_date', 'status'];
     public function room()
     {
         return $this->belongsTo(Room::class);
@@ -27,7 +26,7 @@ class Reservation extends Model
 
     public function addons()
     {
-        return $this->belongsToMany(AddOn::class, 'room_addon_assignments');
+        return $this->belongsToMany(AddOn::class, 'reservation_addon_assignments')->withPivot(['reservation_id', 'add_on_id']);
     }
     public function getTotalPriceAttribute()
     {

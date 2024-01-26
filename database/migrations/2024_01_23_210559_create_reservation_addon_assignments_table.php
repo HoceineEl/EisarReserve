@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservation_addon_assignments', function (Blueprint $table) {
-            $table->foreignId('addon_id')->constrained('add_ons')->cascadeOnDelete();
+            $table->id();
+            $table->foreignId('add_on_id')->constrained('add_ons')->cascadeOnDelete();
             $table->foreignId('reservation_id')->constrained()->cascadeOnDelete();
-            $table->primary(['addon_id', 'reservation_id']);
-            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }
