@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ReservationAddonAssignment extends Model
 {
@@ -40,5 +41,18 @@ class ReservationAddonAssignment extends Model
         $daysDifference = $checkinDate->diffInDays($checkoutDate);
 
         return $daysDifference * $this->addon->price;
+    }
+    public static function getPopularAddonInThisMonth()
+    {
+        $month = now()->month;
+        $year = now()->year;
+        $addon = self::with('addon')
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->select('add_on_id', DB::raw('count(*) as count'))
+            ->groupBy('add_on_id')
+            ->orderByDesc('count')
+            ->first();
+        return $addon->add_on_id;
     }
 }

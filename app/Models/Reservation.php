@@ -47,23 +47,12 @@ class Reservation extends Model
                 }
             })
             ->last();
-        $roomSeasonPrice = $this->room->prices()->where('season_id', $season->id)->first();
+        $roomSeasonPrice = null;
+        if ($season) $roomSeasonPrice = $this->room->prices()->where('season_id', $season->id)->first();
         $roomPrice = $roomSeasonPrice ? $roomSeasonPrice->price : 0;
 
         $addonPrices = $this->addons->sum('price');
 
         return $roomPrice + $addonPrices;
-    }
-    public function avgDuration(): float
-    {
-        $totalDuration = $this->reservations()->sum(function ($reservation) {
-            $checkinDate = Carbon::parse($reservation->checkin_date);
-            $checkoutDate = Carbon::parse($reservation->checkout_date);
-            return $checkinDate->diffInDays($checkoutDate);
-        });
-
-        $totalReservations = $this->reservations()->count();
-
-        return $totalReservations > 0 ? $totalDuration / $totalReservations : 0;
     }
 }

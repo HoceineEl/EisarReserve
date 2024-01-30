@@ -21,18 +21,20 @@ class ListReservations extends ListRecords
     }
     public function getTabs(): array
     {
-        $now = now()->format('Y-m-d H:i:s');
         return [
             'all' => Tab::make(),
-            'current' => Tab::make()->label('Current Reservations')
-                ->modifyQueryUsing(function (Builder $query) use ($now) {
+            'pending' => Tab::make()->label('Pending Reservations')
+                ->modifyQueryUsing(function (Builder $query) {
 
-                    $query->whereDate('checkin_date', '<=', $now)
-                        ->whereDate('checkout_date', '>', $now);
+                    $query->where('status', 'pending');
                 }),
-            'completed' => Tab::make()->label('Completed Reservations')
-                ->modifyQueryUsing(function (Builder $query) use ($now) {
-                    $query->where('checkout_date', '<', $now);
+            'confirmed' => Tab::make()->label('Confirmed Reservations')
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('status', 'confirmed');
+                }),
+            'canceled' => Tab::make()->label('Cancelled Reservations')
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('status', 'canceled');
                 }),
         ];
     }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Reservation;
 use App\Models\Room;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class CreateReservationsSeeder extends Seeder
     {
         // Get all room, season, and user IDs
         $roomIds = \App\Models\Room::pluck('id')->toArray();
-        $userIds = \App\Models\User::pluck('id')->toArray();
+        $userIds = \App\Models\User::where('role', User::ROLE_GUEST)->pluck('id')->toArray();
 
         // Generating 10 reservations
         for ($i = 1; $i <= 300; $i++) {

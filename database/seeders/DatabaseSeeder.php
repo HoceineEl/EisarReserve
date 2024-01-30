@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(6)->create();
+        \App\Models\User::factory(130)->create();
 
         \App\Models\User::factory()->create([
             'name' => 'Manager',
@@ -26,6 +26,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'reservator@example.com',
             'role' => 'reservator',
             'password' => bcrypt('reservator'),
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Guest',
+            'email' => 'guest@example.com',
+            'role' => 'guest',
+            'password' => bcrypt('guest'),
         ]);
         $this->call([
             CreateAddOnsSeeder::class,

@@ -26,7 +26,7 @@ class CreateReservationAddonsSeeder extends Seeder
         $reservations = Reservation::pluck('id')->toArray();
         $addons = AddOn::pluck('id')->toArray();
         foreach ($reservations  as $reservation) {
-            for ($i = 0; $i < rand(0, 5); $i++) {
+            for ($i = 0; $i < rand(0, AddOn::count()); $i++) {
                 $addon = Arr::random($addons);
                 if ($this->checkAddon($addon, $reservation)) {
                     ReservationAddonAssignment::create([
