@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SeasonResource extends Resource
 {
     protected static ?string $model = Season::class;
-    protected static ?string $navigationGroup = "Pricing and Seasons";
+    protected static ?string $navigationGroup = "Seasons Pricing";
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -62,7 +62,7 @@ class SeasonResource extends Resource
                                     ->numeric()
                                     ->maxValue(31)
                                     ->minValue(1)
-                                    ->default(1)
+
                                     ->required()
                                     ->label('Start Day'),
                                 Select::make('start_month')
@@ -70,8 +70,21 @@ class SeasonResource extends Resource
                                     ->default(1)
                                     ->live()
                                     ->required()
+
                                     ->afterStateUpdated(function (string $operation, $state, Set $set, Get $get) {
                                         $set('start_at', $state . '/' . $get('start_day'));
+                                    })
+                                    ->afterStateHydrated(function (Get $get, Set $set) {
+                                        $start_date = $get('start_at');
+                                        $end_date = $get('end_at');
+                                        if ($start_date && $end_date) {
+                                            $start_date = explode('/', $start_date);
+                                            $set('start_month', $start_date[0]);
+                                            $set('start_day', $start_date[1]);
+                                            $end_date = explode('/', $end_date);
+                                            $set('end_month', $end_date[0]);
+                                            $set('end_day', $end_date[1]);
+                                        }
                                     })
                                     ->label('Start Month'),
                             ])

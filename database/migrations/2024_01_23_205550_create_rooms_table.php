@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('building_id')->constrained()->cascadeOnDelete();
             $table->foreignId('type_id')->constrained()->cascadeOnDelete();
-            $table->integer('number')->unique();
+            $table->integer('number');
             $table->unsignedInteger('capacity')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

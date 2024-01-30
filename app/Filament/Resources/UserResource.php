@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RoomSeasonPriceResource\Pages;
-use App\Filament\Resources\RoomSeasonPriceResource\RelationManagers;
-use App\Models\RoomSeasonPrice;
+use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,26 +14,32 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RoomSeasonPriceResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = RoomSeasonPrice::class;
+    protected static ?string $model = User::class;
+    protected static ?string $navigationGroup = "Users Managment";
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('role', 'guest')->count();
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Select::make('room_id')
-                    ->relationship('room', 'id')
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->building->name} -{$record->number}"),
-                Select::make('season_id')
-                    ->relationship('season', 'name'),
-                TextInput::make('price')
-                    ->numeric()
+                TextInput::make('name')->required(),
+                TextInput::make('email')->required(),
+                // TextInput::make('password')
+                //     ->password(),
+                Select::make('role')->options(
+                    User::ROLES
+                )->default(User::ROLE_GUEST),
             ]);
     }
 
@@ -41,9 +47,9 @@ class RoomSeasonPriceResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('room.name'),
-                TextColumn::make('season.name'),
-                TextColumn::make('price')
+                TextColumn::make('name'),
+                TextColumn::make('email'),
+                TextColumn::make('role'),
             ])
             ->filters([
                 //
@@ -68,9 +74,9 @@ class RoomSeasonPriceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRoomSeasonPrices::route('/'),
-            'create' => Pages\CreateRoomSeasonPrice::route('/create'),
-            'edit' => Pages\EditRoomSeasonPrice::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

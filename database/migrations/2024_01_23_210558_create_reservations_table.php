@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('room_id')->constrained()->cascadeOnUpdate();
-            $table->foreignId('season_id')->constrained()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate();
-            $table->date('reservation_date');
-            $table->date('checkin_date');
-            $table->date('checkout_date');
+            $table->dateTime('reservation_date');
+            $table->dateTime('checkin_date');
+            $table->dateTime('checkout_date');
             $table->string('status');
             $table->timestamps();
         });

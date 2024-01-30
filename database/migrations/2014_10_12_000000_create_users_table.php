@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('role', ['manager', 'reservator', 'guest']);
+            $table->string('password')->default(bcrypt('guest'));
+            $table->enum('role', ['manager', 'reservator', 'guest'])->default('guest');
             $table->rememberToken();
             $table->timestamps();
         });

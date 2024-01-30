@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BuildingResource\Pages;
 use App\Filament\Resources\BuildingResource\RelationManagers;
+use App\Filament\Resources\BuildingResource\RelationManagers\RoomsRelationManager;
 use App\Models\Building;
 use Filament\Forms;
 use Filament\Forms\Components\MarkdownEditor;
@@ -63,7 +64,7 @@ class BuildingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RoomsRelationManager::class,
         ];
     }
 

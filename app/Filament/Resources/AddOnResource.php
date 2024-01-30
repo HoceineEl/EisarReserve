@@ -16,6 +16,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -62,7 +63,14 @@ class AddOnResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable()
+                    ->description(function (AddOn $record) {
+                        return $record->description;
+                    }),
+                TextColumn::make('price')
+                    ->searchable()
+                    ->suffix("$"),
             ])
             ->filters([
                 //

@@ -19,6 +19,7 @@ class TypeResource extends Resource
 {
     protected static ?string $model = Type::class;
     protected static ?string $navigationGroup = "Building Management";
+    protected static ?string $navigationParentItem = 'Rooms';
 
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
 

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Reservation;
+use App\Models\Room;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
@@ -16,20 +18,42 @@ class CreateReservationsSeeder extends Seeder
     {
         // Get all room, season, and user IDs
         $roomIds = \App\Models\Room::pluck('id')->toArray();
-        $seasonIds = \App\Models\Season::pluck('id')->toArray();
         $userIds = \App\Models\User::pluck('id')->toArray();
 
         // Generating 10 reservations
-        for ($i = 1; $i <= 10; $i++) {
-            Reservation::create([
-                'room_id' => Arr::random($roomIds),
-                'season_id' => Arr::random($seasonIds),
-                'user_id' => Arr::random($userIds),
-                'reservation_date' => now(),
-                'checkin_date' => now()->addDays(rand(1, 10)),
-                'checkout_date' => now()->addDays(rand(11, 20)),
-                'status' => 'confirmed', // You can change this as needed
-            ]);
+        for ($i = 1; $i <= 300; $i++) {
+            $roomId = Arr::random($roomIds);
+            $userId = Arr::random($userIds);
+            $checkinDate = now()->subDays(rand(0, 300));
+            $reservationDate = $checkinDate->subDays(rand(1, 5));
+            $checkoutDate = now()->addDays(rand(-299, 15));
+
+            // Check if the selected room is available for the given date range
+            $isRoomAvailable = $this->isRoomAvailable($roomId,);
+
+            if ($isRoomAvailable) {
+                Reservation::create([
+                    'room_id' => $roomId,
+                    'user_id' => $userId,
+                    'reservation_date' => $reservationDate,
+                    'checkin_date' => $checkinDate,
+                    'checkout_date' => $checkoutDate,
+                    'status' => Arr::random(array_keys(Reservation::STATUSES)),
+                ]);
+            }
         }
+    }
+
+    /**
+     * Check if the room is available for the given date range.
+     *
+     * @param int $roomId
+     * @param \Carbon\Carbon $checkinDate
+     * @param \Carbon\Carbon $checkoutDate
+     * @return bool
+     */
+    private function isRoomAvailable(int $roomId): bool
+    {
+        return Room::find($roomId)->reservations->isEmpty();
     }
 }

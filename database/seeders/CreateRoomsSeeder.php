@@ -30,13 +30,13 @@ class CreateRoomsSeeder extends Seeder
 
     public function run(): void
     {
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 400; $i++) {
             Room::create([
                 'building_id' => $this->getRandomBuildingId(),
                 'type_id' => $this->getRandomTypeId(),
                 'image' => asset('storage/rooms-images/' . rand(1, 4) . '.jpg'),
-                'number' => $i * rand(12, 140),
-                'capacity' => rand(2, 4),
+                'number' => $i * rand(20, 23),
+                'capacity' => rand(1, 5),
             ]);
         }
     }

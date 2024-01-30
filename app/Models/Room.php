@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
     use HasFactory;
-    protected $fillable = ['building_id', 'type_id', 'number', 'capacity', 'price', 'image'];
+    protected $fillable = ['building_id', 'type_id', 'number', 'capacity', 'image'];
 
     public function building()
     {
@@ -30,5 +31,17 @@ class Room extends Model
     public function getNameAttribute()
     {
         return $this->building->name . "-" . $this->number;
+    }
+    public function avgDuration(): float
+    {
+        $totalDuration = $this->reservations->sum(function ($reservation) {
+            $checkinDate = Carbon::parse($reservation->checkin_date);
+            $checkoutDate = Carbon::parse($reservation->checkout_date);
+            return $checkinDate->diffInDays($checkoutDate);
+        });
+
+        $totalReservations = $this->reservations->count();
+
+        return $totalReservations > 0 ? $totalDuration / $totalReservations : 0;
     }
 }

@@ -13,13 +13,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(20)->create();
+        \App\Models\User::factory(6)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'Hoceine',
-            'email' => 'contact@hoceine.com',
+            'name' => 'Manager',
+            'email' => 'manager@example.com',
             'role' => 'manager',
-            'password' => bcrypt('admin'),
+            'password' => bcrypt('manager'),
+        ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Reservator',
+            'email' => 'reservator@example.com',
+            'role' => 'reservator',
+            'password' => bcrypt('reservator'),
         ]);
         $this->call([
             CreateAddOnsSeeder::class,
@@ -29,6 +35,7 @@ class DatabaseSeeder extends Seeder
             CreateRoomsSeeder::class,
             CreateReservationsSeeder::class,
             CreateReservationAddonsSeeder::class,
+            CreateRoomSeasonPrice::class,
         ]);
     }
 }
