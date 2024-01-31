@@ -9,7 +9,7 @@ use Filament\Widgets\ChartWidget;
 
 class ReservationsRevenueChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Total Revenue Per Month';
     protected static ?int $sort = 3;
     protected static string $color = 'primary';
     public ?string $filter = '2024';

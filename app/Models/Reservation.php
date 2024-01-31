@@ -44,9 +44,9 @@ class Reservation extends Model
         return $roomPrice + $addonPrices;
     }
 
-    public static function getSeason(Carbon $checkinDate)
+    public static function getSeason($checkinDate)
     {
-        $carbonDate = $checkinDate;
+        $carbonDate = Carbon::parse($checkinDate);
 
         $season = Season::all()
             ->filter(function ($item) use ($carbonDate) {
@@ -63,5 +63,25 @@ class Reservation extends Model
             ->last();
 
         return $season;
+    }
+    public static function getMostVisitedSeason()
+    {
+        $reservations = Reservation::get();
+        $seasonCount = [];
+
+        foreach ($reservations as $reservation) {
+            $season = self::getSeason($reservation->checkin_date);
+
+            if ($season) {
+                // Increment the count for the current season
+                $seasonId = $season->id;
+                $seasonCount[$seasonId] = ($seasonCount[$seasonId] ?? 0) + 1;
+            }
+        }
+        // Find the season with the maximum count
+        $mostVisitedSeasonId = collect($seasonCount)->sortDesc()->keys()->first();
+        $mostVisitedSeason = Season::find($mostVisitedSeasonId);
+
+        return $mostVisitedSeason->name;
     }
 }

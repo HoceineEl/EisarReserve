@@ -11,7 +11,7 @@ use Filament\Widgets\ChartWidget;
 
 class ReservationsChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Reservations Per Month';
     protected static ?int $sort = 3;
     protected static string $color = 'success';
     public ?string $filter = '2024';

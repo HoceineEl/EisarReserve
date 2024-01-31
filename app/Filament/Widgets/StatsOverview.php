@@ -48,16 +48,22 @@ class StatsOverview extends BaseWidget
                 ->chart([100, 500, 1500, 400, 200, $rooms])
                 ->color('info')
                 ->chartColor('info'),
-            Stat::make('The most popular addon in this month ', AddOn::find(ReservationAddonAssignment::getPopularAddonInThisMonth())->name)
-                ->description('This is the most demended addon this month')
+            Stat::make('Most Popular Addon This Month', AddOn::find(ReservationAddonAssignment::getPopularAddonInThisMonth())->name)
+                ->description('The most demanded addon this month')
                 ->descriptionIcon('heroicon-o-arrow-trending-up')
                 ->color(ColorsColor::Indigo)
                 ->chart([50, 300, 400, 500, 4000]),
-            // Stat::make('The Best Season is  ', Season::find(RoomSeasonPrice::getBestSeason())->name)
-            //     ->description('This is the best season that has alot of vistors')
-            //     ->descriptionIcon('heroicon-o-arrow-trending-up')
-            //     ->color(ColorsColor::Indigo)
-            //     ->chart([50, 300, 400, 500, 4000])
+            Stat::make('Top Season  ', Reservation::getMostVisitedSeason())
+                ->description('This is the most popular season.')
+                ->descriptionIcon('heroicon-o-arrow-trending-up')
+                ->color(ColorsColor::Indigo)
+                ->chart([50, 300, 400, 500, 4000]),
+            Stat::make('This Month\'s Revenue', Reservation::whereMonth('created_at', now()->month)->where('status', 'paid')->get()->sum('total_price') . '$')
+                ->description('This is the total revenue for the month.')
+                ->descriptionIcon('heroicon-o-arrow-trending-up')
+                ->color(ColorsColor::Indigo)
+                ->chart([50, 300, 400, 500, 4000])
+
 
 
         ];
@@ -65,6 +71,7 @@ class StatsOverview extends BaseWidget
 
     public static function canView(): bool
     {
+        Reservation::getMostVisitedSeason();
         return auth()->user()->role != User::ROLE_GUEST;
     }
     public  function getBestSeason()

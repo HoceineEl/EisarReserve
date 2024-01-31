@@ -1,7 +1,7 @@
-<div>
+<div class="flex flex-col">
     <div class="flex gap-4 justify-center py-10 overflow-x-auto">
         @foreach ($types as $type)
-            <div class="bg-indigo-950 cursor-pointer w-fit px-2 py-1 rounded-md flex items-center gap-2"
+            <div class="bg-gradient-to-r dark:from-emerald-500 from-emerald-900 dark:to-indigo-900 to-indigo-600  cursor-pointer w-fit px-2 py-1 rounded-md font-semibold flex items-center gap-2 text-white"
                 wire:click="setType({{ $type->id }})">
                 <p>{{ $type->name }}</p>
                 @if ($type->id == $this->type)
@@ -35,7 +35,9 @@
                         {{ $room->building->address }}
                     </p>
                     <div class="flex justify-between pb-3">
-                        <p class="bg-amber-700 px-2 py-1 rounded-md text-white font-semibold">{{ $room->type->name }}
+                        <p
+                            class="bg-gradient-to-r from-emerald-500 to-indigo-600 px-2 py-1 rounded-md text-white font-semibold">
+                            {{ $room->type->name }}
                         </p>
                         @if ($room->isReservedNow())
                             <p class="bg-red-400 px-2 py-1 rounded-md text-white font-semibold">Reserved Now</p>
@@ -51,9 +53,12 @@
                 </div>
             </div>
         @endforeach
-        <div x-intersect="$wire.loadMore()">
-        </div>
     </div>
+    @if ($rooms->hasMorePages())
+        <div x-intersect="$wire.loadMore()" class="flex justify-center items-center mt-10">
+            <x-filament::loading-indicator class="h-10 w-10" />
+        </div>
+    @endif
     @livewireScripts
 
 </div>

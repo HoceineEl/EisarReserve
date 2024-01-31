@@ -232,31 +232,52 @@ class BookNowResource extends Resource
     }
     public static function calculateSeasonDetails(Get $get, Set $set)
     {
+        // Retrieve the selected addons from the form state.
         $addons = $get('addons');
+
+        // Initialize the addons price variable.
         $addonsPrice = 0;
+
+        // Calculate the total price for selected addons.
         foreach ($addons as $id) {
             $addon = AddOn::find($id);
+
+            // Accumulate the addon price.
             $addonsPrice += $addon->price;
         }
 
+        // Retrieve the selected check-in date from the form state.
         $date = $get('checkin_date');
-        if ($date) {
 
+        if ($date) {
             $carbonDate = Carbon::parse($date);
 
+            // Determine the season for the selected check-in date.
             $season = Reservation::getSeason($carbonDate);
 
             if ($season) {
+                // Update the form state with the season ID.
                 $set('season_id', $season->id);
+
+                // Retrieve the selected room from the form state.
                 $room = $get('room_id');
+
                 $totalPrice = 0;
+
+                // Retrieve the room price for the selected season.
                 $roomPrice = RoomSeasonPrice::where('room_id', $room)->where('season_id', $season->id)->first()?->price;
+
                 $totalPrice = $roomPrice + $addonsPrice;
+
+                // Update the form state with the total costs.
                 $set('costs', $totalPrice);
-            } else
+            } else {
+                // If no season is found, set costs to 0.
                 $set('costs', 0);
+            }
         }
 
+        // Update the form state with the addons cost.
         $set('addons_cost', $addonsPrice);
     }
 }
