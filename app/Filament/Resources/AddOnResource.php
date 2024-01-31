@@ -18,9 +18,6 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use League\CommonMark\Input\MarkdownInput;
 
 class AddOnResource extends Resource
 {

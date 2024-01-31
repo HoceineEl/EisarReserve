@@ -14,7 +14,7 @@ class Reservation extends Model
 
     const STATUSES = [
         'pending' => "Pending",
-        'confirmed' => "Confirmed",
+        'paid' => "Paid",
         'canceled' => "Canceled",
     ];
 

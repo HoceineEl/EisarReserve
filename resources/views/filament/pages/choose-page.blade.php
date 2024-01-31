@@ -1,3 +1,4 @@
 <x-filament-panels::page>
-  <livewire:choose/>
+    <livewire:choose />
+    @vite('resources/css/app.css')
 </x-filament-panels::page>

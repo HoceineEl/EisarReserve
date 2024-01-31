@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate();
             $table->dateTime('checkin_date');
             $table->dateTime('checkout_date');
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

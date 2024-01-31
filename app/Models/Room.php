@@ -44,4 +44,13 @@ class Room extends Model
 
         return $totalReservations > 0 ? $totalDuration / $totalReservations : 0;
     }
+    public function isReservedNow()
+    {
+        $inputDateTime = Carbon::parse(now());
+        $room = $this;
+        $reservations = $room->reservations->filter(function ($reservation) use ($inputDateTime) {
+            return $inputDateTime >= Carbon::parse($reservation->checkin_date) && $inputDateTime < Carbon::parse($reservation->checkout_date);
+        });
+        return $reservations->isNotEmpty();
+    }
 }

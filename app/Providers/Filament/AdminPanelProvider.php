@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Eisar Reserve')
             ->brandLogo(asset('logo.svg'))
             ->favicon(asset('logo.svg'))
-            ->font('Ubuntu')
+            ->font('Roboto')
             ->colors([
                 'primary' => Color::Amber,
             ])

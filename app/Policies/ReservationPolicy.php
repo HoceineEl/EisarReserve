@@ -13,7 +13,7 @@ class ReservationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isManager() || $user->isReservator();
+        return $user->isManager() || $user->isReservator() || $user->isGuest();
     }
 
     /**
@@ -21,7 +21,7 @@ class ReservationPolicy
      */
     public function view(User $user, Reservation $reservation): bool
     {
-        return $user->isManager() || $user->isReservator() || ($user->isGuest() && $user->id == $reservation->user_id);
+        return $user->isManager() || $user->isReservator() || $user->isGuest();
     }
 
     /**
@@ -29,7 +29,7 @@ class ReservationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isManager() || $user->isReservator();
+        return $user->isManager() || $user->isReservator() || $user->isGuest();
     }
 
     /**
@@ -37,7 +37,7 @@ class ReservationPolicy
      */
     public function update(User $user, Reservation $reservation): bool
     {
-        return $user->isManager() || $user->isReservator();
+        return $user->isManager() || $user->isReservator() || ($user->isGuest() && $reservation->status == 'pending');
     }
 
     /**

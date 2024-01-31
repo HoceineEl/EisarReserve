@@ -28,9 +28,9 @@ class ListReservations extends ListRecords
 
                     $query->where('status', 'pending');
                 }),
-            'confirmed' => Tab::make()->label('Confirmed Reservations')
+            'paid' => Tab::make()->label('Paid Reservations')
                 ->modifyQueryUsing(function (Builder $query) {
-                    $query->where('status', 'confirmed');
+                    $query->where('status', 'paid');
                 }),
             'canceled' => Tab::make()->label('Cancelled Reservations')
                 ->modifyQueryUsing(function (Builder $query) {

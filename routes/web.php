@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Resources\ReservationResource\Pages\CreateReservation;
 use Illuminate\Support\Facades\Route;
 
 /*

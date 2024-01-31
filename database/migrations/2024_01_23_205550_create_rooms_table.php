@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('type_id')->constrained()->cascadeOnDelete();
             $table->integer('number');
             $table->unsignedInteger('capacity')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image')->default(asset('storage/rooms-images/room-icon.png'));
             $table->timestamps();
         });
     }

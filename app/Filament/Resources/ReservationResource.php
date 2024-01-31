@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\RoomSeasonPrice;
 use App\Models\Season;
+use App\Models\User;
 use Carbon\Carbon;
 use Closure;
 use Filament\Forms;
@@ -25,7 +26,9 @@ use Filament\Tables;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class ReservationResource extends Resource
 {
@@ -44,6 +47,9 @@ class ReservationResource extends Resource
     public static function form(Form $form): Form
     {
         $currentDate = now()->toDateString();
+
+        $room = request('room');
+
         return $form
             ->schema([
                 Section::make('')
@@ -51,6 +57,7 @@ class ReservationResource extends Resource
                         Select::make('room_id')
                             ->label('Room')
                             ->searchable()
+                            ->default($room)
                             ->native(false)
                             ->live()
                             ->reactive()
@@ -94,9 +101,10 @@ class ReservationResource extends Resource
                             ->label('Status')
                             ->options([
                                 'pending' => 'Pending',
-                                'confirmed' => 'Confirmed',
+                                'paid' => 'Paid',
                                 'canceled' => 'Cancelled',
                             ])
+                            ->hiddenOn(auth()->user()->role == User::ROLE_GUEST)
                             ->required(),
                         TextInput::make('costs')
                             ->label("All that costs ")
@@ -118,8 +126,10 @@ class ReservationResource extends Resource
                                 fn (Get $get): Closure => function (string $attribute, $value, Closure $fail) use ($get) {
                                     $inputDateTime = Carbon::parse($get('checkin_date'));
                                     $room = Room::find($get('room_id'));
+
+
                                     if ($room) {
-                                        $reservations = $room->reservations->filter(function ($reservation) use ($inputDateTime) {
+                                        $reservations = $room->reservations->where('status', '!=', 'canceled')->filter(function ($reservation) use ($inputDateTime) {
                                             // Check if the selected check-in time falls within the range of any existing reservations
                                             return $inputDateTime >= Carbon::parse($reservation->checkin_date) && $inputDateTime < Carbon::parse($reservation->checkout_date);
                                         });
@@ -191,12 +201,10 @@ class ReservationResource extends Resource
                     ->label('Status')
                     ->options([
                         'pending' => 'Pending',
-                        'confirmed' => 'Confirmed',
+                        'paid' => 'Paid',
                         'canceled' => 'Canceled',
                     ])
                     ->selectablePlaceholder(false)
-
-
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
@@ -295,5 +303,9 @@ class ReservationResource extends Resource
         }
 
         $set('addons_cost', $addonsPrice);
+    }
+    public static function canAccess(): bool
+    {
+        return !User::find(auth()->id())->isGuest();
     }
 }

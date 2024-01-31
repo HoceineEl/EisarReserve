@@ -43,7 +43,7 @@ class GuestReservationsTable extends BaseWidget
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
-                        'confirmed' => 'success',
+                        'paid' => 'Paid',
                         'canceled' => 'danger',
                     })
                     ->searchable()

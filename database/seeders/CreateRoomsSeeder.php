@@ -34,7 +34,7 @@ class CreateRoomsSeeder extends Seeder
             Room::create([
                 'building_id' => $this->getRandomBuildingId(),
                 'type_id' => $this->getRandomTypeId(),
-                'image' => asset('storage/rooms-images/' . rand(1, 4) . '.jpg'),
+                'image' => asset('storage/rooms-images/' . rand(1, 7) . '.jpg'),
                 'number' => $i * rand(20, 23),
                 'capacity' => rand(1, 5),
             ]);
