@@ -1,11 +1,11 @@
 <div>
     <div class="flex gap-4 justify-center py-10 overflow-x-auto">
-        @foreach ($buildings as $building)
+        @foreach ($types as $type)
             <div class="bg-indigo-950 cursor-pointer w-fit px-2 py-1 rounded-md flex items-center gap-2"
-                wire:click="setBuilding({{ $building->id }})">
-                <p>{{ $building->name }}</p>
-                @if ($building->id == $this->building)
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-10 h-10">
+                wire:click="setType({{ $type->id }})">
+                <p>{{ $type->name }}</p>
+                @if ($type->id == $this->type)
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
                         <path fill-rule="evenodd"
                             d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
                             clip-rule="evenodd" />
@@ -23,7 +23,7 @@
                         alt="{{ $room->number }} - {{ $room->building->name }}">
                 </div>
                 <div class="px-4 py-2 flex flex-col gap-5">
-                    <h3 class="font-bold text-2xl">{{ $room->number }} - {{ $room->building->name }}</h3>
+                    <h3 class="font-bold text-xl">{{ $room->number }} - {{ $room->building->name }}</h3>
 
                     <p class="text-sm flex gap-2 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">

@@ -2,30 +2,30 @@
 
 namespace App\Livewire;
 
-use App\Models\Building;
+use App\Models\Type;
 use App\Models\Room;
 use Livewire\Component;
 
 class Choose extends Component
 {
     public $perPage = 10;
-    public $building = null;
+    public $type = null;
     public function render()
     {
         return view('livewire.choose', [
-            'rooms' => $this->building ? Room::where('building_id', $this->building)->paginate($this->perPage) : Room::paginate($this->perPage),
-            'buildings' => Building::all(),
+            'rooms' => $this->type ? Room::where('type_id', $this->type)->paginate($this->perPage) : Room::paginate($this->perPage),
+            'types' => type::all(),
         ]);
     }
     public function loadMore()
     {
         $this->perPage += 10;
     }
-    public function setBuilding($building)
+    public function setType($type)
     {
-        if ($this->building == $building)
-            $this->building = null;
+        if ($this->type == $type)
+            $this->type = null;
         else
-            $this->building = $building;
+            $this->type = $type;
     }
 }
