@@ -13,6 +13,7 @@ use Faker\Core\Color;
 use Filament\Support\Colors\Color as ColorsColor;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\DB;
 use Termwind\Enums\Color as EnumsColor;
 
 class StatsOverview extends BaseWidget
@@ -52,11 +53,11 @@ class StatsOverview extends BaseWidget
                 ->descriptionIcon('heroicon-o-arrow-trending-up')
                 ->color(ColorsColor::Indigo)
                 ->chart([50, 300, 400, 500, 4000]),
-            Stat::make('The Best Season is  ', Season::find(RoomSeasonPrice::getBestSeason())->name)
-                ->description('This is the best season that has alot of vistors')
-                ->descriptionIcon('heroicon-o-arrow-trending-up')
-                ->color(ColorsColor::Indigo)
-                ->chart([50, 300, 400, 500, 4000])
+            // Stat::make('The Best Season is  ', Season::find(RoomSeasonPrice::getBestSeason())->name)
+            //     ->description('This is the best season that has alot of vistors')
+            //     ->descriptionIcon('heroicon-o-arrow-trending-up')
+            //     ->color(ColorsColor::Indigo)
+            //     ->chart([50, 300, 400, 500, 4000])
 
 
         ];
@@ -65,5 +66,14 @@ class StatsOverview extends BaseWidget
     public static function canView(): bool
     {
         return auth()->user()->role != User::ROLE_GUEST;
+    }
+    public  function getBestSeason()
+    {
+        $season = self::with('season')
+            ->select('season_id', DB::raw('count(*) as count'))
+            ->groupBy('season_id')
+            ->orderByDesc('count')
+            ->first();
+        return $season->season_id;
     }
 }

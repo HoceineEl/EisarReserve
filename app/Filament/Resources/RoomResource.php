@@ -38,6 +38,8 @@ class RoomResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-home';
     protected static ?string $navigationGroup = "Building Management";
+    protected static ?string $recordTitleAttribute = 'number';
+
 
     public static function form(Form $form): Form
     {

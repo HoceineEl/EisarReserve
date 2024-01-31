@@ -53,10 +53,10 @@ class ReservationsRevenueChart extends ChartWidget
         // dd($year, now()->year);
         $year = Carbon::create($year);
         $currentYear = $year->year;
-        $reservations = Reservation::whereYear('reservation_date', $currentYear)->where('status', 'confirmed')->get();
+        $reservations = Reservation::whereYear('created_at', $currentYear)->where('status', 'confirmed')->get();
 
         $TotalRevenuePerMonth = $reservations->groupBy(function ($reservation) {
-            return Carbon::parse($reservation->reservation_date)->format('F');
+            return Carbon::parse($reservation->created_at)->format('F');
         })->map(function ($group) {
             return $group->sum('total_price');
         });

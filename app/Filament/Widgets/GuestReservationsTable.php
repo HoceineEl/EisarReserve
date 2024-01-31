@@ -28,7 +28,7 @@ class GuestReservationsTable extends BaseWidget
             ->query(ReservationResource::getEloquentQuery()->where('user_id', auth()->id()))
             ->heading('Your Latest Reservations')
             ->searchable()
-            ->defaultSort('reservation_date', 'desc')
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('room.number')
                     ->label('Room')
@@ -48,7 +48,7 @@ class GuestReservationsTable extends BaseWidget
                     })
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('reservation_date')
+                TextColumn::make('created_at')
                     ->label('Reservation Date')
                     ->searchable()
                     ->dateTime()

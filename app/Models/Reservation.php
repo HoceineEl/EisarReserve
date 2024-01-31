@@ -9,18 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
-    protected $fillable = ['room_id', 'user_id', 'reservation_date', 'checkin_date', 'checkout_date', 'status'];
+
+    protected $fillable = ['room_id', 'user_id', 'created_at', 'checkin_date', 'checkout_date', 'status'];
+
     const STATUSES = [
         'pending' => "Pending",
         'confirmed' => "Confirmed",
         'canceled' => "Canceled",
     ];
+
     public function room()
     {
         return $this->belongsTo(Room::class);
     }
-
-
 
     public function user()
     {
@@ -31,14 +32,27 @@ class Reservation extends Model
     {
         return $this->belongsToMany(AddOn::class, 'reservation_addon_assignments')->withPivot(['reservation_id', 'add_on_id']);
     }
+
     public function getTotalPriceAttribute()
     {
-        $carbonDate = Carbon::parse($this->checkin_date);
+        $season = self::getSeason(Carbon::parse($this->checkin_date));
+        $roomSeasonPrice = $season ? $this->room->prices()->where('season_id', $season->id)->first() : null;
+        $roomPrice = $roomSeasonPrice ? $roomSeasonPrice->price : 0;
+
+        $addonPrices = $this->addons->sum('price');
+
+        return $roomPrice + $addonPrices;
+    }
+
+    public static function getSeason(Carbon $checkinDate)
+    {
+        $carbonDate = $checkinDate;
+
         $season = Season::all()
             ->filter(function ($item) use ($carbonDate) {
                 $startAt = Carbon::createFromFormat('m/d', $item->start_at);
                 $endAt = Carbon::createFromFormat('m/d', $item->end_at);
-                // Add a year to startat if startAt is greater 
+
                 if ($startAt->format('md') > $endAt->format('md')) {
                     $startAt->subYear(1);
                     return $carbonDate->isBetween($startAt, $endAt);
@@ -47,12 +61,7 @@ class Reservation extends Model
                 }
             })
             ->last();
-        $roomSeasonPrice = null;
-        if ($season) $roomSeasonPrice = $this->room->prices()->where('season_id', $season->id)->first();
-        $roomPrice = $roomSeasonPrice ? $roomSeasonPrice->price : 0;
 
-        $addonPrices = $this->addons->sum('price');
-
-        return $roomPrice + $addonPrices;
+        return $season;
     }
 }

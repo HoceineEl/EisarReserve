@@ -36,7 +36,7 @@ class CreateReservationsSeeder extends Seeder
                 Reservation::create([
                     'room_id' => $roomId,
                     'user_id' => $userId,
-                    'reservation_date' => $reservationDate,
+                    'created_at' => $reservationDate,
                     'checkin_date' => $checkinDate,
                     'checkout_date' => $checkoutDate,
                     'status' => Arr::random(array_keys(Reservation::STATUSES)),

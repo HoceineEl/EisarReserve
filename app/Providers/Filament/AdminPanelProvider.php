@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->registration()
             ->profile()
             ->spa()
             ->brandName('Eisar Reserve')
@@ -63,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
 
             ])
             ->plugin(
-                \Hasnayeen\Themes\ThemesPlugin::make()
+                \Hasnayeen\Themes\ThemesPlugin::make(),
             );
     }
 }

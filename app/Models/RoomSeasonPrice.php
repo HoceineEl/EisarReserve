@@ -20,13 +20,4 @@ class RoomSeasonPrice extends Model
     {
         return $this->belongsTo(Season::class);
     }
-    public static function getBestSeason()
-    {
-        $season = self::with('season')
-            ->select('season_id', DB::raw('count(*) as count'))
-            ->groupBy('season_id')
-            ->orderByDesc('count')
-            ->first();
-        return $season->season_id;
-    }
 }

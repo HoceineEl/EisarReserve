@@ -22,6 +22,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
@@ -106,7 +107,7 @@ class ReservationResource extends Resource
                     ])->columns(),
                 Section::make('Dates')
                     ->schema([
-                        DateTimePicker::make('reservation_date')
+                        DateTimePicker::make('created_at')
                             ->label('Reservation Date')
                             ->seconds(false)
                             ->default(now())
@@ -129,7 +130,7 @@ class ReservationResource extends Resource
                                     }
                                 }
                             ])
-                            ->afterOrEqual('reservation_date')
+                            ->afterOrEqual('created_at')
                             ->reactive()
                             ->live()
                             ->seconds(false)
@@ -186,17 +187,19 @@ class ReservationResource extends Resource
                     })
                     ->sortable(),
                 TextColumn::make('total_price'),
-                TextColumn::make('status')
+                SelectColumn::make('status')
                     ->label('Status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'confirmed' => 'success',
-                        'canceled' => 'danger',
-                    })
+                    ->options([
+                        'pending' => 'Pending',
+                        'confirmed' => 'Confirmed',
+                        'canceled' => 'Canceled',
+                    ])
+                    ->selectablePlaceholder(false)
+
+
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('reservation_date')
+                TextColumn::make('created_at')
                     ->label('Reservation Date')
                     ->searchable()
                     ->dateTime()
@@ -219,7 +222,7 @@ class ReservationResource extends Resource
                     ->label('Addons')
                     ->badge()
                     ->weight(FontWeight::Light)
-                    ->color(fn (string $state) => Arr::random([Color::Blue, Color::Amber, Color::Cyan, Color::Fuchsia, Color::Lime, Color::Orange, Color::Green, Color::Sky]))
+                    ->color(fn () => Arr::random(Color::all()))
                     ->searchable()
             ])
             ->filters([
@@ -278,21 +281,7 @@ class ReservationResource extends Resource
 
             $carbonDate = Carbon::parse($date);
 
-            $season = Season::all()
-                ->filter(function ($item) use ($carbonDate) {
-                    $startAt = Carbon::createFromFormat('m/d', $item->start_at);
-                    $endAt = Carbon::createFromFormat('m/d', $item->end_at);
-                    // Add a year to startat if startAt is greater 
-                    if ($startAt->format('md') > $endAt->format('md')) {
-                        $startAt->subYear(1);
-
-                        return $carbonDate->isBetween($startAt, $endAt);
-                    } else {
-
-                        return $startAt->format('md') <= $carbonDate->format('md') && $carbonDate->format('md') <= $endAt->format('md');
-                    }
-                })
-                ->last();
+            $season = Reservation::getSeason($carbonDate);
 
             if ($season) {
                 $set('season_id', $season->id);

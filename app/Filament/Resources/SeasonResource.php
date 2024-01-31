@@ -28,6 +28,7 @@ class SeasonResource extends Resource
 {
     protected static ?string $model = Season::class;
     protected static ?string $navigationGroup = "Seasons Pricing";
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

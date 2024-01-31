@@ -49,10 +49,10 @@ class ReservationsChart extends ChartWidget
         // dd($year, now()->year);
         $year = Carbon::create($year);
         $currentYear = $year->year;
-        $reservations = Reservation::whereYear('reservation_date', $currentYear)->get();
+        $reservations = Reservation::whereYear('created_at', $currentYear)->get();
 
         $reservationsPerMonth = $reservations->groupBy(function ($reservation) {
-            return Carbon::parse($reservation->reservation_date)->format('F');
+            return Carbon::parse($reservation->created_at)->format('F');
         })->map->count();
         $months = [
             'January', 'February', 'March', 'April', 'May', 'June',

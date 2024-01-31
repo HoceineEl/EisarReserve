@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('room_id')->constrained()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate();
-            $table->dateTime('reservation_date');
             $table->dateTime('checkin_date');
             $table->dateTime('checkout_date');
             $table->string('status');
