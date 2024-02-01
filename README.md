@@ -76,18 +76,15 @@
 ### Room Management
 
 ![Room Management](screenshots/rooms-list.png)
-![Room Management](screenshots/room-create-1.png)
+![Room Management](screenshots/rooms-create-1.png)
 ![Room Management](screenshots/room-create-2.png)
 
 ### Reservation Form
 
 ![Reservation Form](screenshots/res-list.png)
 ![Reservation Form](screenshots/res-create.png)
-<video width="900" height="500" controls>
 
-  <source src="screenshots/res-create.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Click here to view Reservation Form video](screenshots/res-create.mp4)
 
 ![Reservation Form](screenshots/res-dark.png)
 
