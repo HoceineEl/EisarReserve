@@ -143,6 +143,11 @@
 -   Guests can view room details and initiate reservations.
 -   Reservators manage pending reservations and update status after payment.
 
+10. **Roms loading on scroll:**
+
+-   Guests can view room details and initiate reservations.
+-   Reservators manage pending reservations and update status after payment.
+
 ## Credit
 
 This system, EisarReserve, was developed by Hoceine EL Idrissi. For more information and to explore other projects, visit [Hoceine's website](https://hoceine.com).
