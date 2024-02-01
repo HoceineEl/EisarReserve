@@ -90,6 +90,19 @@
 
 ![Reservation Form](screenshots/db.png)
 
+### Themes
+
+**Nord**
+![Dashboard](screenshots/nord-light.png)
+![Dashboard](screenshots/nord.png)
+**Default**
+![Dashboard](screenshots/default.png)
+**Drakula**
+![Dashboard](screenshots/drakula.png)
+**Sunset**
+![Dashboard](screenshots/sunset.png)
+![Dashboard](screenshots/sunset-dark.png)
+
 ## Features
 
 1. **Building Management:**
