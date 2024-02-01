@@ -1,67 +1,151 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Eisar Reserve - Room Reservation System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Installation Steps
 
-## About Laravel
+1. **Clone the Git repository:**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    ```bash
+    git clone https://github.com/HoceineEl/EisarReserve.git
+    ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. **Navigate to the project directory:**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    ```bash
+    cd EisarReserve
+    ```
 
-## Learning Laravel
+3. **Copy the environment file:**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    ```bash
+    cp .env.example .env
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. **Install PHP dependencies:**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    composer install
+    ```
 
-## Laravel Sponsors
+5. **Generate the application key:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    php artisan key:generate
+    ```
 
-### Premium Partners
+6. **Migrate the database with seeding:**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
 
-## Contributing
+7. **Install Node.js dependencies:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    npm install
+    ```
 
-## Code of Conduct
+8. **Build the assets:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    npm run build
+    ```
 
-## Security Vulnerabilities
+9. **Create a symbolic link to the storage:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    php artisan storage:link
+    ```
 
-## License
+## Usage
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# EisarReserve
+-   Eisar Reserve is a room reservation system. Provide information on how users can interact with the system, make reservations, and manage bookings.
+
+## Screenshots
+
+### Dashboard
+
+**Manager**
+![Dashboard](screenshots/dashboard.png)
+**Reservator**
+![Dashboard](screenshots/res-dash.png)
+**Guest**
+![Dashboard](screenshots/guest-dash.png)
+**Drak Dashboard**
+![Dashboard](screenshots/dark.png)
+
+### Room Management
+
+![Room Management](screenshots/rooms-list.png)
+![Room Management](screenshots/room-create-1.png)
+![Room Management](screenshots/room-create-2.png)
+
+### Reservation Form
+
+![Reservation Form](screenshots/res-list.png)
+![Reservation Form](screenshots/res-create.png)
+<video width="640" height="360" controls>
+
+  <source src="screenshots/res-create.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+![Reservation Form](screenshots/res-dark.png)
+
+### Guest Booking
+
+![Reservation Form](screenshots/book.gif)
+
+## Features
+
+1. **Building Management:**
+
+    - Create, view, update, and delete buildings.
+
+2. **Room Management:**
+
+    - CRUD operations for managing rooms within buildings.
+    - Display room details, including images.
+
+3. **Season-Based Room Pricing:**
+
+    - Define pricing for rooms based on seasonal start and end dates.
+
+4. **Add-On Management:**
+
+    - CRUD operations for managing room add-ons (e.g., breakfast, massage).
+    - Set prices for each add-on.
+
+5. **Reservation Management:**
+
+    - CRUD operations for handling reservations.
+    - Pricing calculated based on booking date and selected add-ons.
+    - Different reservation statuses (Pending, Paid, Canceled).
+
+6. **User Management:**
+
+    - CRUD operations for managing users.
+    - Assign roles (Admin, Reservations Staff, Guest) to control permissions.
+
+7. **Role-Based Access:**
+
+    - Different roles have specific permissions.
+    - Admins have full access, reservations staff manage reservations, and guests can make room requests.
+
+8. **Interactive Forms and Tables:**
+
+    - User-friendly forms for interactive data entry.
+    - Tables for easy data visualization and management.
+
+9. **Dashboard with Charts and Stats:**
+
+    - Dashboard tailored to user roles.
+    - Charts and statistics for insights into reservations, pricing, and other relevant data.
+
+10. **Reservation Process:**
+
+-   Guests can view room details and initiate reservations.
+-   Reservators manage pending reservations and update status after payment.
+
+## Credit
+
+This system, EisarReserve, was developed by Hoceine EL Idrissi. For more information and to explore other projects, visit [Hoceine's website](https://hoceine.com).

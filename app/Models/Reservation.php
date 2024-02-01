@@ -82,6 +82,6 @@ class Reservation extends Model
         $mostVisitedSeasonId = collect($seasonCount)->sortDesc()->keys()->first();
         $mostVisitedSeason = Season::find($mostVisitedSeasonId);
 
-        return $mostVisitedSeason->name;
+        return $mostVisitedSeason ? $mostVisitedSeason->name : 'None';
     }
 }

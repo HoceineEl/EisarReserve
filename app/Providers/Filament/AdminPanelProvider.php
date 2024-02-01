@@ -29,7 +29,6 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->profile()
-            ->spa()
             ->brandName('Eisar Reserve')
             ->brandLogo(asset('logo.svg'))
             ->favicon(asset('logo.svg'))

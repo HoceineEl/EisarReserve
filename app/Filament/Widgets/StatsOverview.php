@@ -48,7 +48,7 @@ class StatsOverview extends BaseWidget
                 ->chart([100, 500, 1500, 400, 200, $rooms])
                 ->color('info')
                 ->chartColor('info'),
-            Stat::make('Most Popular Addon This Month', AddOn::find(ReservationAddonAssignment::getPopularAddonInThisMonth())->name)
+            Stat::make('Most Popular Addon This Month', ReservationAddonAssignment::getPopularAddonInThisMonth())
                 ->description('The most demanded addon this month')
                 ->descriptionIcon('heroicon-o-arrow-trending-up')
                 ->color(ColorsColor::Indigo)

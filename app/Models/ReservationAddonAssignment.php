@@ -53,6 +53,6 @@ class ReservationAddonAssignment extends Model
             ->groupBy('add_on_id')
             ->orderByDesc('count')
             ->first();
-        return $addon->add_on_id;
+        return $addon ? $addon->addon->name : 'None';
     }
 }
