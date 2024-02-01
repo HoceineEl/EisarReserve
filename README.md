@@ -70,7 +70,7 @@
 ![Dashboard](screenshots/res-dash.png)
 **Guest**
 ![Dashboard](screenshots/guest-dash.png)
-**Drak Dashboard**
+**Dark Dashboard**
 ![Dashboard](screenshots/dark.png)
 
 ### Room Management
