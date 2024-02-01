@@ -84,7 +84,7 @@
 ![Reservation Form](screenshots/res-list.png)
 ![Reservation Form](screenshots/res-create.png)
 
-[Click here to view Reservation Form video](screenshots/res-create.mp4)
+[Click here to view Reservation Form video](screenshots/res-create.mp4 ":include :type=video controls width=100%")
 
 ![Reservation Form](screenshots/res-dark.png)
 
