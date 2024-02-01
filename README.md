@@ -96,7 +96,7 @@
 ![Dashboard](screenshots/nord-light.png)
 ![Dashboard](screenshots/nord.png)
 **Default**
-![Dashboard](screenshots/default.png)
+![Dashboard](screenshots/defualt.png)
 **Drakula**
 ![Dashboard](screenshots/drakula.png)
 **Sunset**
