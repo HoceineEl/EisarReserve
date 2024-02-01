@@ -83,14 +83,12 @@
 
 ![Reservation Form](screenshots/res-list.png)
 ![Reservation Form](screenshots/res-create.png)
-
+![Reservation Form](screenshots/res-dark.png)
 [Click here to view Reservation Form video](screenshots/res-create.mp4 ":include :type=video controls width=100%")
 
-![Reservation Form](screenshots/res-dark.png)
+### DataBase
 
-### Guest Booking
-
-![Reservation Form](screenshots/book.gif)
+![Reservation Form](screenshots/db.png)
 
 ## Features
 
@@ -145,8 +143,8 @@
 
 10. **Roms loading on scroll:**
 
--   Guests can view room details and initiate reservations.
--   Reservators manage pending reservations and update status after payment.
+-   The rooms in the guest booking are loading on scroll using livewire.
+    ![Reservation Form](screenshots/book.gif)
 
 ## Credit
 
