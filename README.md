@@ -83,7 +83,7 @@
 
 ![Reservation Form](screenshots/res-list.png)
 ![Reservation Form](screenshots/res-create.png)
-<video width="640" height="360" controls>
+<video width="900" height="500" controls>
 
   <source src="screenshots/res-create.mp4" type="video/mp4">
   Your browser does not support the video tag.
